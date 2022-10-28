@@ -72,7 +72,7 @@ async function getMembersSkills (query, esClient) {
   const boolQuerySkills = []
 
   if (query.handlesLower) {
-    boolQuerySkills.push({ query: { terms: { handleLower: query.handlesLower } } })
+    boolQuerySkills.push({ terms: { handleLower: query.handlesLower } })
   }
   esQuerySkills.body.query = {
     bool: {
@@ -100,7 +100,7 @@ async function getMembersStats (query, esClient) {
   }
   const boolQueryStats = []
   if (query.handlesLower) {
-    boolQueryStats.push({ query: { terms: { handleLower: query.handlesLower } } })
+    boolQueryStats.push({  terms: { handleLower: query.handlesLower } })
     boolQueryStats.push({ match_phrase: { groupId: 10 } })
   }
   esQueryStats.body.query = {

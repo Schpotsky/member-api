@@ -32,6 +32,12 @@ const initES = async () => {
     } catch (err) {
       // ignore
     }
+    logger.info(`Delete index ${config.ES.MEMBER_SKILLS_ES_INDEX} if any.`)
+    try {
+      await client.indices.delete({ index: config.ES.MEMBER_SKILLS_ES_INDEX })
+    } catch (err) {
+      // ignore
+    }
   }
 
   let exists = await client.indices.exists({ index: config.ES.MEMBER_PROFILE_ES_INDEX })
@@ -92,6 +98,27 @@ const initES = async () => {
 
     await client.indices.create({
       index: config.ES.MEMBER_STATS_ES_INDEX,
+      body
+    })
+  }
+  exists = await client.indices.exists({ index: config.ES.MEMBER_SKILLS_ES_INDEX })
+  if (exists) {
+    logger.info(`The index ${config.ES.MEMBER_SKILLS_ES_INDEX} exists.`)
+  } else {
+    logger.info(`The index ${config.ES.MEMBER_SKILLS_ES_INDEX} will be created.`)
+
+    const body = { mappings: {} }
+    body.mappings[config.get('ES.MEMBER_SKILLS_ES_TYPE')] = {
+      properties: {
+        handleLower: { type: 'keyword' },
+        handle: { type: 'keyword' },
+        userId: { type: 'keyword' },
+        userHandle: {type: 'keyword'}
+      }
+    }
+
+    await client.indices.create({
+      index: config.ES.MEMBER_SKILLS_ES_INDEX,
       body
     })
   }

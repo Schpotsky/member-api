@@ -18,6 +18,7 @@ const members = [{
     subTrack: 'code'
   },
   userId: 123,
+  traitId: 1,
   firstName: 'first name',
   lastName: 'last name',
   description: 'desc',
@@ -60,6 +61,7 @@ const members = [{
     subTrack: 'code'
   },
   userId: 456,
+  traitId:2,
   firstName: 'first name 2',
   lastName: 'last name 2',
   description: 'desc 2',
@@ -665,6 +667,41 @@ async function seedData () {
       updatedAt: '2020-02-07T07:38:50.088Z',
       createdBy: 'test1',
       updatedBy: 'test2'
+    },
+    refresh: 'true' // refresh ES so that it is visible for read operations instantly
+  })
+  // Create member skills in ES
+  await esClient.create({
+    index: config.ES.MEMBER_SKILLS_ES_INDEX,
+    type: config.ES.MEMBER_SKILLS_ES_TYPE,
+    id: '123',
+    body: {
+      userId: 123,
+      userHandle: 'denis',
+      handleLower: 'denis',
+      skills: {}
+    },
+    refresh: 'true' // refresh ES so that it is visible for read operations instantly
+  })
+
+  // Create member stats in ES
+  await esClient.create({
+    index: config.ES.MEMBER_STATS_ES_INDEX,
+    type: config.ES.MEMBER_STATS_ES_TYPE,
+    id: '123',
+    body: {
+      userId: 123,
+      userHandle: 'denis',
+      handleLower: 'denis',
+      groupId: '10',
+      maxRating: {
+        rating: 1711,
+        track: "DEVELOP",
+        subTrack: "CODE",
+        ratingColor: "#FCD617"
+    },
+    challenges: 425,
+    wins:25
     },
     refresh: 'true' // refresh ES so that it is visible for read operations instantly
   })

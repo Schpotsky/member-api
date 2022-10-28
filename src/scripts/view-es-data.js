@@ -8,7 +8,7 @@ const config = require('config')
 const logger = require('../common/logger')
 
 if (process.argv.length <= 2) {
-  logger.info('Please provide index name: "member" or "member_trait"')
+  logger.info('Please provide index name: "members-2020-01-s3", "membertraits-2020-01", "memberstats-2020-01" or "memberskills-2020-01"')
   process.exit(1)
 }
 const indexName = process.argv[2]
